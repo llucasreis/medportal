@@ -16,22 +16,31 @@ export const AuthProvider = ({ children }) => {
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const { data: responseData } = await api.post(apiRoutes.SESSION, {
-      email,
-      password,
-    });
+    try {
+      const { data: responseData } = await api.post(apiRoutes.SESSION, {
+        email,
+        password,
+      });
+      console.log(responseData);
+      const { user, token } = responseData.content;
 
-    if (responseData.errors.length === 0) {
-      const { user, token } = responseData;
+      console.log(user, token);
 
       localStorage.setItem('@medportal:token', token);
       localStorage.setItem('@medportal:user', JSON.stringify(user));
 
       setData({ user, token });
 
-      return { responseData, success: true };
+      return { data: responseData, success: true };
+    } catch (error) {
+      let responseData = null;
+
+      if ('response' in error) {
+        responseData = error.response.data;
+      }
+
+      return { data: responseData, success: false };
     }
-    return { responseData, success: false };
   }, []);
 
   const signOut = useCallback(() => {

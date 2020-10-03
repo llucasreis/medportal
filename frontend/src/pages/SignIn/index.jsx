@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import { TextField } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
-import { api, apiRoutes } from '../../services/api';
+import { useAuth } from '../../store/context/auth';
 
 import { Button } from '../../components';
 import {
@@ -17,17 +19,31 @@ import {
 
 const SignIn = () => {
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
+  const { signIn } = useAuth();
 
-  const handleSignIn = useCallback(async formData => {
-    const { email, password } = formData;
+  const handleSignIn = useCallback(
+    async formData => {
+      const { email, password } = formData;
 
-    const response = await api.post(apiRoutes.SESSION, {
-      email,
-      password,
-    });
+      const { data, success } = await signIn({
+        email,
+        password,
+      });
 
-    console.log(response);
-  }, []);
+      if (success) {
+        toast.success('Login feito com sucesso.');
+
+        history.push('/home');
+      } else {
+        const { errors } = data;
+        errors.forEach(errorData => {
+          toast.error(errorData.error);
+        });
+      }
+    },
+    [history, signIn],
+  );
 
   return (
     <Container>
