@@ -14,4 +14,19 @@ export default createGlobalStyle`
     color: #2F2F2F;
     -webkit-font-smoothing: antialiased;
   }
+
+  html, body, #root {
+    height: 100vh;
+  }
+
+  body, input, button {
+    font-family: 'Roboto Slab', Montserrat, sans-serif;
+    font-size: 16px;
+  }
+
+  :root {
+    --color-background: #F5F5F5;
+    --color-primary: #2F2F2F;
+    --color-secundary: #3C83B0;
+  }
 `;

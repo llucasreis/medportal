@@ -1,8 +1,19 @@
 import React, { useCallback } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 
 import { api, apiRoutes } from '../../services/api';
+
+import { Button } from '../../components';
+import {
+  Container,
+  Content,
+  Background,
+  Info,
+  Title,
+  TitleHighlight,
+  Wrapper,
+} from './styles';
 
 const SignIn = () => {
   const { register, handleSubmit } = useForm();
@@ -19,28 +30,46 @@ const SignIn = () => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(handleSignIn)}>
-      <div>
-        <TextField
-          name="email"
-          type="email"
-          inputRef={register({ required: true })}
-          autoComplete="off"
-          variant="outlined"
-        />
-      </div>
-      <div>
-        <TextField
-          name="password"
-          type="password"
-          inputRef={register({ required: true })}
-          variant="outlined"
-        />
-      </div>
-      <div>
-        <Button type="submit">Entrar</Button>
-      </div>
-    </form>
+    <Container>
+      <Content>
+        <form onSubmit={handleSubmit(handleSignIn)}>
+          <Wrapper>
+            <Title>
+              <TitleHighlight>med</TitleHighlight>Portal
+            </Title>
+          </Wrapper>
+          <Wrapper>
+            <Info>Portal de agendamento de consultas médicas</Info>
+          </Wrapper>
+
+          <Wrapper>
+            <TextField
+              fullWidth
+              label="E-mail"
+              name="email"
+              type="email"
+              inputRef={register({ required: true })}
+              autoComplete="off"
+              variant="outlined"
+            />
+          </Wrapper>
+          <Wrapper>
+            <TextField
+              fullWidth
+              label="Senha"
+              name="password"
+              type="password"
+              inputRef={register({ required: true })}
+              variant="outlined"
+            />
+          </Wrapper>
+          <div>
+            <Button type="submit">Entrar</Button>
+          </div>
+        </form>
+      </Content>
+      <Background />
+    </Container>
   );
 };
 
