@@ -36,21 +36,28 @@ public class AuthenticationFilter implements Filter {
 	private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
 	
 	@Override
-	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain)
+	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
 			throws IOException, ServletException {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		String token = getToken(req);
-		if(token != null && tokenService.validateToken(token)) {
-			filterChain.doFilter(request, response);
-//			UUID id = tokenService.getIdFromToken(token);
-//			
-//			Optional<User> user = userRepository.findById(id);			
+		if(!req.getMethod().equalsIgnoreCase("OPTIONS")) {
+			String token = getToken(req);
+			if(token != null && tokenService.validateToken(token)) {
+				chain.doFilter(request, response);	
+			} else {
+				logger.error("Cannot authorizate user");
+				res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido.");
+			}
 		} else {
-			logger.error("Cannot authorizate user");
-			res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido.");
+			res.setHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Methods", "POST,GET,DELETE,PUT");
+			res.setHeader("Access-Control-Max-Age", "3600");
+			res.setHeader("Access-Control-Allow-Headers", "Access-Control-Expose-Headers"+"Authorization, content-type," +
+	          "USERID"+"ROLE"+
+	                  "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with,responseType,observe");
+			res.setStatus(HttpServletResponse.SC_OK);
 		}	
 	}
 	

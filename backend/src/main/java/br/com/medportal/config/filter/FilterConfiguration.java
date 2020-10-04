@@ -20,8 +20,6 @@ public class FilterConfiguration {
 	
 	@Bean
 	public FilterRegistrationBean<AuthenticationFilter> authenticationFilter() {
-		System.out.println("Passei aqui");
-		System.out.println(tokenService.check());
 		FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean<>();
 		
 		registrationBean.setFilter(new AuthenticationFilter(tokenService, userRepository));
