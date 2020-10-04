@@ -15,7 +15,7 @@ const Home = () => {
         style={{ width: '60%', height: '60%' }}
       />
       <Welcome>
-        <h2>Bem-vindo {user.name}</h2>
+        <h2>Bem-vindo, {user.name}!</h2>
       </Welcome>
     </Container>
   );

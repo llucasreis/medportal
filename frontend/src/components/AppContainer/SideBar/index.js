@@ -167,9 +167,19 @@ const SideBar = ({ children }) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: '50px',
+                marginBottom: '10px',
+                fontWeight: 'bold',
+                fontSize: '35px',
               }}
             >
+              <span
+                style={{
+                  color: '#008357',
+                }}
+              >
+                med
+              </span>
+              Portal
               {/* <img src={icon_showsonline} alt="Shows Online" /> */}
             </div>
           </div>
