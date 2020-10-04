@@ -1,6 +1,18 @@
 export default {
-  SESSION: '/session',
-  USER: '/user',
-  DOCTOR: '/doctor',
-  APPOINTMENT: '/appointment',
+  SESSION: {
+    route: '/session',
+    auth: '',
+  },
+  USER: {
+    route: '/user',
+    auth: '',
+  },
+  DOCTOR: {
+    route: '/doctor',
+    auth: 'BEARER',
+  },
+  APPOINTMENT: {
+    route: '/appointment',
+    auth: 'BEARER',
+  },
 };

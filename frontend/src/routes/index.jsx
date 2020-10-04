@@ -2,14 +2,14 @@ import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
 import Route from './Route';
-import Home from '../pages/Home';
 import SignIn from '../pages/SignIn';
+import AppContainer from '../components/AppContainer';
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
 
-    <Route path="/home" component={Home} isPrivate />
+    <Route path="/admin" component={AppContainer} isPrivate />
 
     <Redirect from="*" to="/" />
   </Switch>

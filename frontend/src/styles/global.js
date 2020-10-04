@@ -15,6 +15,11 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   html, body, #root {
     height: 100vh;
   }
@@ -22,11 +27,5 @@ export default createGlobalStyle`
   body, input, button {
     font-family: 'Roboto Slab', Montserrat, sans-serif;
     font-size: 16px;
-  }
-
-  :root {
-    --color-background: #F5F5F5;
-    --color-primary: #2F2F2F;
-    --color-secundary: #3C83B0;
   }
 `;

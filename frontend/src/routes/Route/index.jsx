@@ -2,6 +2,7 @@ import React from 'react';
 import { Route as ReactDOMRoute, Redirect } from 'react-router-dom';
 
 import { useAuth } from '../../store/context/auth';
+import { getLink } from '../menus';
 
 const Route = ({ isPrivate = false, component: Component, ...rest }) => {
   const { user } = useAuth();
@@ -15,7 +16,7 @@ const Route = ({ isPrivate = false, component: Component, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: isPrivate ? '/' : '/home',
+              pathname: isPrivate ? '/' : `${getLink('Home')}`,
               state: { from: location },
             }}
           />

@@ -4,6 +4,10 @@ import { api, apiRoutes } from '../../services/api';
 
 export const AuthContext = createContext({});
 
+export const getToken = () => {
+  return localStorage.getItem('@medportal:token');
+};
+
 export const AuthProvider = ({ children }) => {
   const [data, setData] = useState(() => {
     const token = localStorage.getItem('@medportal:token');
@@ -21,10 +25,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(responseData);
       const { user, token } = responseData.content;
-
-      console.log(user, token);
 
       localStorage.setItem('@medportal:token', token);
       localStorage.setItem('@medportal:user', JSON.stringify(user));

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../store/context/auth';
+import { getLink } from '../../routes/menus';
 
 import { Button } from '../../components';
 import {
@@ -34,7 +35,7 @@ const SignIn = () => {
       if (success) {
         toast.success('Login feito com sucesso.');
 
-        history.push('/home');
+        history.push(`${getLink('Home')}`);
       } else {
         const { errors } = data;
         errors.forEach(errorData => {
