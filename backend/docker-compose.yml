@@ -1,0 +1,25 @@
+version: "3.2"
+
+services:
+  postgresdb:
+    image: postgres
+    container_name: "postgres-server"
+    environment:
+      POSTGRES_PASSWORD: "p0stgr3s"
+      PGDATA: /data/postgres
+    volumes:
+      - type: volume
+        source: postgres
+        target: /data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network
+
+networks:
+  postgres-network:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
