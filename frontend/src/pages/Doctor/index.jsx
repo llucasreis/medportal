@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { toast } from 'react-toastify';
 import { MuiLoading, DataTable, Button } from '../../components';
 import { api, apiRoutes } from '../../services/api';
-
 import { Info, LoadingInfo } from './styles';
+
+import SaveModal from './modal';
 
 const Doctor = () => {
   const [pagination, setPagination] = useState({
@@ -10,10 +12,12 @@ const Doctor = () => {
     size: 10,
     totalElements: 0,
   });
+  const [openSaveModal, setOpenSaveModal] = useState(false);
   const [doctors, setDoctors] = useState(null);
 
   const getDoctorData = useCallback(async () => {
     try {
+      setDoctors(null);
       const { data } = await api.get(apiRoutes.DOCTOR);
 
       const { content, number, size, totalElements } = data;
@@ -32,6 +36,36 @@ const Doctor = () => {
   useEffect(() => {
     getDoctorData();
   }, [getDoctorData]);
+
+  const handleOpenSaveModal = useCallback(() => {
+    setOpenSaveModal(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setOpenSaveModal(false);
+  }, []);
+
+  const handleCreateDoctor = useCallback(
+    async formData => {
+      try {
+        const { data } = await api.post(apiRoutes.DOCTOR, formData);
+
+        toast.success('Médico criado com sucesso');
+
+        getDoctorData();
+
+        return { data, success: true };
+      } catch (error) {
+        let data = null;
+        if (error.response) {
+          data = error.response.data;
+        }
+
+        return { data, success: false };
+      }
+    },
+    [getDoctorData],
+  );
 
   const columns = [
     {
@@ -64,10 +98,17 @@ const Doctor = () => {
 
   return (
     <>
+      {openSaveModal && (
+        <SaveModal
+          open={openSaveModal}
+          onClose={handleCloseModal}
+          onCreate={handleCreateDoctor}
+        />
+      )}
       <Info>
         <div>
           <h1>Lista de Médicos</h1>
-          <Button>Novo Médico</Button>
+          <Button onClick={() => handleOpenSaveModal()}>Novo Médico</Button>
         </div>
       </Info>
       {!doctors ? (

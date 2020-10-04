@@ -94,7 +94,10 @@ const SignUp = ({ open, onClose }) => {
         </DialogContent>
         <DialogActions>
           <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-            <Button type="submit" style={{ minWidth: '200px' }}>
+            <Button
+              type="submit"
+              style={{ minWidth: '200px', marginRight: '15px' }}
+            >
               {loading ? <MuiLoading /> : 'Salvar'}
             </Button>
           </div>
