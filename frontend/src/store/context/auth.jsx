@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 
+// eslint-disable-next-line import/no-cycle
 import { api, apiRoutes } from '../../services/api';
 
 export const AuthContext = createContext({});

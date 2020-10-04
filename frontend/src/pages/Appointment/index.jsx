@@ -4,21 +4,21 @@ import { api, apiRoutes } from '../../services/api';
 
 import { Info, LoadingInfo } from './styles';
 
-const Doctor = () => {
+const Appointment = () => {
   const [pagination, setPagination] = useState({
     number: 0,
     size: 10,
     totalElements: 0,
   });
-  const [doctors, setDoctors] = useState(null);
+  const [appointments, setAppointments] = useState(null);
 
-  const getDoctorData = useCallback(async () => {
+  const getAppointmentsData = useCallback(async () => {
     try {
-      const { data } = await api.get(apiRoutes.DOCTOR);
+      const { data } = await api.get(apiRoutes.APPOINTMENT);
 
       const { content, number, size, totalElements } = data;
 
-      setDoctors(content);
+      setAppointments(content);
       setPagination({
         number,
         size,
@@ -30,33 +30,27 @@ const Doctor = () => {
   }, []);
 
   useEffect(() => {
-    getDoctorData();
-  }, [getDoctorData]);
+    getAppointmentsData();
+  }, [getAppointmentsData]);
 
   const columns = [
     {
-      field: 'name',
-      label: 'Nome',
+      field: {
+        relation: 'user',
+        field: 'name',
+      },
+      label: 'Cliente',
     },
     {
-      field: 'crm',
-      label: 'CRM',
+      field: {
+        relation: 'doctor',
+        field: 'name',
+      },
+      label: 'Médico',
     },
     {
-      field: 'number',
-      label: 'Número',
-    },
-    {
-      field: 'city',
-      label: 'Cidade',
-    },
-    {
-      field: 'state',
-      label: 'Estado',
-    },
-    {
-      field: 'specialty',
-      label: 'Especialidade',
+      field: 'date',
+      label: 'Data',
     },
   ];
 
@@ -66,11 +60,11 @@ const Doctor = () => {
     <>
       <Info>
         <div>
-          <h1>Lista de Médicos</h1>
-          <Button>Novo Médico</Button>
+          <h1>Lista de Agendamentos</h1>
+          <Button>Novo Agendamento</Button>
         </div>
       </Info>
-      {!doctors ? (
+      {!appointments ? (
         <LoadingInfo>
           <h1>Carregando...</h1>
           <MuiLoading />
@@ -78,7 +72,7 @@ const Doctor = () => {
       ) : (
         <DataTable
           columns={columns}
-          rows={doctors}
+          rows={appointments}
           actions={actions}
           hasPagination
           pageNumber={pagination.number}
@@ -90,4 +84,4 @@ const Doctor = () => {
   );
 };
 
-export default Doctor;
+export default Appointment;

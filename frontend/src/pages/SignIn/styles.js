@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 import { banner } from '../../assets';
 
 export const Container = styled.div`
@@ -39,6 +40,15 @@ export const TitleHighlight = styled.span`
 
 export const Info = styled.div`
   font-size: 16px;
+`;
+
+export const CreateAccountInfo = styled.div`
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    color: ${shade(0.9, '#2F2F2F')};
+  }
 `;
 
 export const Background = styled.div`

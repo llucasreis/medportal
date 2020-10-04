@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,6 +17,8 @@ import AppBar from '../AppBar';
 import SideBarItem from '../SideBarItem';
 import menus from '../../../routes/menus';
 // import { logout } from '../../../services/auth';
+
+import { useAuth } from '../../../store/context/auth';
 
 const drawerWidth = 250;
 
@@ -109,8 +111,9 @@ const useStyles = makeStyles(theme => ({
 
 const SideBar = ({ children }) => {
   const classes = useStyles();
-  // const history = useHistory();
+  const history = useHistory();
   const [open, setOpen] = React.useState(true);
+  const { signOut } = useAuth();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -121,10 +124,10 @@ const SideBar = ({ children }) => {
   };
 
   const handleLogout = useCallback(() => {
-    // logout();
-    // history.replace('/');
+    signOut();
+    history.replace('/');
     toast.success('Logout feito com sucesso');
-  }, []);
+  }, [history, signOut]);
 
   return (
     <div className={classes.root}>

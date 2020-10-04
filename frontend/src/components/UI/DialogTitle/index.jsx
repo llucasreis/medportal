@@ -8,7 +8,7 @@ const DialogTitle = ({ title, styleTitle, children, ...rest }) => (
       <Typography
         variant="h6"
         style={{
-          color: '#8083FE',
+          color: '#008357',
           fontSize: '28px',
           fontWeight: '500',
           ...styleTitle,
